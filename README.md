@@ -192,42 +192,7 @@ LLM_CodeGen_Assignment/
 
 ## � DNEW WORKFLOW FEATURES
 
-### **🤖 Multi-Agent Code Generation Strategy**
 
-#### **Architecture Overview:**
-```
-Problem Input
-     ↓
-👨‍💻 Developer Agent (Initial Code)
-     ↓
-🧪 Test Engineer Agent (Test Suite)
-     ↓
-⚡ Test Execution & Feedback
-     ↓
-👨‍🔬 Code Reviewer Agent (Analysis)
-     ↓
-🔄 Refinement Loop (Up to 3 cycles)
-     ↓
-✅ Final Validation Agent
-     ↓
-Production-Ready Solution
-```
-
-#### **Key Features:**
-- **Specialized Agents:** Each agent has domain expertise (development, testing, review)
-- **Test-Driven Development:** Automated test generation and execution
-- **Iterative Refinement:** Up to 3 cycles of improvement based on test feedback
-- **External Tool Integration:** Real Python execution for validation
-- **Quality Assurance:** Final validation ensures production readiness
-
-#### **Usage:**
-```bash
-# Run multi-agent evaluation
-cd evaluation_scripts
-python run_innovative_strategy.py
-
-# Results saved to: generated/innovative_multi_agent/
-```
 
 ### **🌐 Multi-Modal Workflow (Groq + Gemini)**
 
