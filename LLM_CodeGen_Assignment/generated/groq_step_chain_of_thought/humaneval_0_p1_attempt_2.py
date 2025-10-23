@@ -1,0 +1,15 @@
+# Groq solution using step_chain_of_thought (Attempt 2/3)
+# Dataset: Unknown
+# Problem: Easy/0
+# Difficulty: Easy
+
+from typing import List
+
+def has_close_elements(numbers: List[float], threshold: float) -> bool:
+    if len(numbers) < 2:
+        return False
+    numbers.sort()
+    for i in range(len(numbers) - 1):
+        if numbers[i + 1] - numbers[i] <= threshold:
+            return True
+    return False
