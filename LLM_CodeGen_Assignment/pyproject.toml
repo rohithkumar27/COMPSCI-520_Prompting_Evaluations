@@ -1,0 +1,58 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "llm-codegen-evaluation"
+version = "1.0.0"
+description = "LLM Code Generation Evaluation with Coverage Analysis"
+dependencies = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "coverage>=7.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "black>=22.0.0",
+    "flake8>=5.0.0",
+    "mypy>=1.0.0",
+]
+
+# Test configuration (like npm scripts)
+[tool.pytest.ini_options]
+testpaths = ["tests", "generated"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "--cov=generated",
+    "--cov-report=html:coverage_html",
+    "--cov-report=term-missing",
+    "--cov-branch",
+    "-v"
+]
+
+# Coverage configuration
+[tool.coverage.run]
+source = ["generated"]
+omit = [
+    "*/tests/*",
+    "*/test_*",
+    "*/__pycache__/*",
+    "*/venv/*",
+    "*/env/*",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+]
+
+# Black code formatter
+[tool.black]
+line-length = 88
+target-version = ['py38']

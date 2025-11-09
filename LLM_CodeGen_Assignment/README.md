@@ -59,6 +59,39 @@ Example walkthrough for input 'xyz':
 - Step 3: Result: 'xyz' + reverse('xy') = 'xyzyx'
 ```
 
+## 🚀 NEW: Advanced Workflows
+
+### **🤖 Innovative Multi-Agent Strategy**
+
+A breakthrough approach combining multiple AI agents working collaboratively:
+
+#### **Multi-Agent Architecture:**
+- **👨‍💻 Developer Agent:** Generates initial high-quality code
+- **🧪 Test Engineer Agent:** Creates comprehensive test suites  
+- **👨‍🔬 Code Reviewer Agent:** Analyzes failures and suggests improvements
+- **🔄 Refinement Loop:** Iteratively improves code based on test feedback
+- **✅ Final Validation Agent:** Provides quality assessment
+
+#### **Key Innovations:**
+- **Role-Based Prompting:** Each agent has specialized expertise
+- **Test-Driven Refinement:** External tool integration with unit test feedback
+- **Collaborative Intelligence:** Agents work together to solve complex problems
+- **Iterative Improvement:** Multi-step Generate → Test → Analyze → Refine cycle
+
+### **🌐 Multi-Modal Workflow (Groq + Gemini)**
+
+Collaborative approach leveraging strengths of different LLM providers:
+
+#### **Workflow Steps:**
+1. **🔥 Groq Generation:** Fast initial solution using Llama-3.1-8B
+2. **💎 Gemini Improvement:** Enhanced refinement using Gemini-2.5-Flash
+3. **⚡ Validation:** Automated testing and quality checks
+
+#### **Benefits:**
+- **Speed + Quality:** Combines Groq's speed with Gemini's refinement capabilities
+- **Cross-Model Validation:** Different models catch different types of errors
+- **Complementary Strengths:** Leverages unique capabilities of each provider
+
 ## 🚀 Quick Start
 
 ### **Prerequisites:**
@@ -92,6 +125,18 @@ cd evaluation_scripts
 python real_dataset_evaluation.py
 ```
 
+#### **4. 🚀 NEW: Innovative Multi-Agent Strategy:**
+```bash
+cd evaluation_scripts
+python run_innovative_strategy.py
+```
+
+#### **5. 🚀 NEW: Multi-Modal Workflow (Groq + Gemini):**
+```bash
+cd workflows
+python run_multi_modal_simple.py
+```
+
 ## 📁 Project Structure
 
 ```
@@ -101,6 +146,7 @@ LLM_CodeGen_Assignment/
 │   ├── enhanced_gemini_prompting_strategies.py   # Enhanced Gemini prompts
 │   ├── run_enhanced_groq_workflow.py            # Execute Groq evaluation
 │   ├── run_enhanced_gemini_workflow.py          # Execute Gemini evaluation
+│   ├── run_innovative_strategy.py               # 🚀 NEW: Multi-agent workflow
 │   ├── real_dataset_evaluation.py               # Real dataset evaluation
 │   ├── gemini_pass_at_k_evaluator.py           # Gemini Pass@K metrics
 │   ├── comprehensive_pass_at_k_evaluator.py     # Comprehensive evaluation
@@ -114,12 +160,16 @@ LLM_CodeGen_Assignment/
 │   ├── gemini_chain_of_thought/                 # Original Gemini solutions
 │   ├── enhanced_gemini_chain_of_thought/        # Enhanced Gemini solutions
 │   ├── enhanced_chain_of_thought/               # Enhanced Groq solutions
-│   └── enhanced_step_chain_of_thought/          # Enhanced Groq step solutions
+│   ├── enhanced_step_chain_of_thought/          # Enhanced Groq step solutions
+│   ├── innovative_multi_agent/                  # 🚀 NEW: Multi-agent solutions
+│   └── multi_modal_simple/                      # 🚀 NEW: Multi-modal solutions
 ├── datasets/                        # 📚 Problem datasets
 │   ├── humaneval_dataset.py                     # HUMANEVAL problems
 │   └── apps_tough_problems.py                   # APPS hard problems
-├── workflows/                       # 🔄 Original workflows
-│   └── prompting_strategies.py                  # Original prompting strategies
+├── workflows/                       # 🔄 Workflow implementations
+│   ├── prompting_strategies.py                  # Original prompting strategies
+│   ├── innovative_multi_agent_strategy.py       # 🚀 NEW: Multi-agent framework
+│   └── run_multi_modal_simple.py               # 🚀 NEW: Multi-modal workflow
 └── EVALUATION_STRUCTURE.md         # 📋 Project organization guide
 ```
 
@@ -139,6 +189,86 @@ LLM_CodeGen_Assignment/
 ### **Problem Categories:**
 - **HUMANEVAL:** Easy algorithmic problems (Easy/0 to Easy/9)
 - **APPS:** Hard competitive programming problems (APPS/0, APPS/1)
+
+## � DNEW WORKFLOW FEATURES
+
+### **🤖 Multi-Agent Code Generation Strategy**
+
+#### **Architecture Overview:**
+```
+Problem Input
+     ↓
+👨‍💻 Developer Agent (Initial Code)
+     ↓
+🧪 Test Engineer Agent (Test Suite)
+     ↓
+⚡ Test Execution & Feedback
+     ↓
+👨‍🔬 Code Reviewer Agent (Analysis)
+     ↓
+🔄 Refinement Loop (Up to 3 cycles)
+     ↓
+✅ Final Validation Agent
+     ↓
+Production-Ready Solution
+```
+
+#### **Key Features:**
+- **Specialized Agents:** Each agent has domain expertise (development, testing, review)
+- **Test-Driven Development:** Automated test generation and execution
+- **Iterative Refinement:** Up to 3 cycles of improvement based on test feedback
+- **External Tool Integration:** Real Python execution for validation
+- **Quality Assurance:** Final validation ensures production readiness
+
+#### **Usage:**
+```bash
+# Run multi-agent evaluation
+cd evaluation_scripts
+python run_innovative_strategy.py
+
+# Results saved to: generated/innovative_multi_agent/
+```
+
+### **🌐 Multi-Modal Workflow (Groq + Gemini)**
+
+#### **Collaborative Process:**
+```
+Problem Input
+     ↓
+🔥 Groq (Llama-3.1-8B) - Fast Generation
+     ↓
+💎 Gemini (2.5-Flash) - Quality Refinement
+     ↓
+⚡ Automated Validation
+     ↓
+Optimized Solution
+```
+
+#### **Benefits:**
+- **Speed + Quality:** Combines Groq's fast generation with Gemini's refinement
+- **Cross-Model Validation:** Different models catch different error types
+- **Cost Optimization:** Uses faster model for initial generation, premium model for refinement
+- **Complementary Strengths:** Leverages unique capabilities of each provider
+
+#### **Usage:**
+```bash
+# Run multi-modal workflow
+cd workflows
+python run_multi_modal_simple.py
+
+# Results saved to: generated/multi_modal_simple/
+```
+
+### **🎯 Workflow Comparison:**
+
+| Feature | Enhanced Prompts | Multi-Agent | Multi-Modal |
+|---------|------------------|-------------|-------------|
+| **Approach** | Single model + enhanced prompts | Multiple specialized agents | Multiple models collaboration |
+| **Complexity** | Medium | High | Medium |
+| **Quality** | High | Very High | High |
+| **Speed** | Fast | Slower (iterative) | Medium |
+| **Innovation** | Prompt engineering | Agent collaboration | Model orchestration |
+| **Best For** | General improvements | Complex problems | Cross-model optimization |
 
 ## 📊 Detailed Results
 
@@ -249,12 +379,16 @@ CRITICAL: MUST return dp[W] at the end, not leave incomplete!
 2. **Automated Enhancement** - Generate problem-specific guidance automatically
 3. **Multi-Modal Prompting** - Include visual algorithm explanations
 4. **Dynamic Prompting** - Adapt prompts based on model responses
+5. **🚀 Multi-Agent Expansion** - Add specialized agents (Security, Performance, Documentation)
+6. **🚀 Cross-Model Orchestration** - Intelligent routing between different LLM providers
 
 ### **Research Directions:**
 1. **Prompt Engineering Patterns** - Identify generalizable enhancement patterns
 2. **Model-Specific Optimization** - Tailor prompts to specific model architectures
 3. **Failure Mode Analysis** - Systematic study of remaining failure cases
 4. **Cross-Domain Application** - Apply techniques to other code generation tasks
+5. **🚀 Agent Learning Systems** - Agents that learn from previous solutions
+6. **🚀 Collaborative AI Frameworks** - Standardized multi-agent development patterns
 
 ## 📝 Citation
 

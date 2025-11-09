@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LLM Coverage Comparison Report – Groq vs Gemini</title>
+<style>
+  body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #f9fbfd;
+    margin: 40px;
+    color: #1a1a1a;
+  }
+  h1, h2 {
+    color: #0b355d;
+    text-align: center;
+    margin-top: 20px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 30px 0;
+  }
+  th, td {
+    border: 1px solid #ccc;
+    padding: 10px 12px;
+    text-align: left;
+  }
+  th {
+    background: #e8f0f7;
+    color: #0b355d;
+  }
+  tr:nth-child(even) { background: #fbfdff; }
+  caption {
+    font-weight: bold;
+    color: #1b4f72;
+    margin-bottom: 8px;
+    text-align: left;
+  }
+  .high { background-color: #d4efdf; }
+  .medium { background-color: #fcf3cf; }
+  .low { background-color: #f5b7b1; }
+  .notes {
+    font-size: 0.9em;
+    color: #2c3e50;
+  }
+</style>
+</head>
+<body>
+
+<h1>LLM Test Coverage Comparison – Groq & Gemini</h1>
+<p style="text-align:center">Consolidated metrics from Groq and Gemini model evaluations (Chain & Step Chain of Thought)</p>
+
+<table>
+<caption>📊 Combined Coverage Summary</caption>
+<thead>
+<tr>
+  <th>Model</th>
+  <th>Variant</th>
+  <th>Total Problems</th>
+  <th>Total Statements</th>
+  <th>Total Branches</th>
+  <th>Partial Branches</th>
+  <th>Line Coverage (%)</th>
+  <th>Branch Coverage (%)</th>
+  <th>Notes / Observations</th>
+</tr>
+</thead>
+<tbody>
+
+<!-- GROQ CHAIN -->
+<tr class="medium">
+  <td rowspan="2"><strong>Groq</strong></td>
+  <td>Chain of Thought</td>
+  <td>10</td>
+  <td>174</td>
+  <td>54</td>
+  <td>0</td>
+  <td>33%</td>
+  <td>100%</td>
+  <td>Moderate line coverage (33%) but perfect branch coverage. Two logic test failures lowered total execution completeness.</td>
+</tr>
+
+<!-- GROQ STEP -->
+<tr class="medium">
+  <td>Step Chain of Thought</td>
+  <td>10</td>
+  <td>249</td>
+  <td>122</td>
+  <td>4</td>
+  <td>30%</td>
+  <td>96.7%</td>
+  <td>Expanded test depth with partial branches in nested logic. 7/10 problems passed with 30% line coverage; strong branch completeness.</td>
+</tr>
+
+<!-- GEMINI CHAIN -->
+<tr class="high">
+  <td rowspan="2"><strong>Gemini</strong></td>
+  <td>Chain of Thought</td>
+  <td>12</td>
+  <td>318</td>
+  <td>172</td>
+  <td>2</td>
+  <td>28%</td>
+  <td>98.8%</td>
+  <td>High branch coverage across 40 test cases. Broader logical exploration at cost of line execution density.</td>
+</tr>
+
+<!-- GEMINI STEP -->
+<tr class="low">
+  <td>Step Chain of Thought</td>
+  <td>10</td>
+  <td>258</td>
+  <td>130</td>
+  <td>1</td>
+  <td>24%</td>
+  <td>99.2%</td>
+  <td>Very wide generative coverage (32 test cases). Strong branch exploration, low per-line execution. Two failed logic tests reduce pass rate.</td>
+</tr>
+
+</tbody>
+</table>
+
+<h2>📈 Analysis Summary</h2>
+<ul>
+  <li><strong>Groq Chain of Thought</strong> — Reliable coverage baseline (33% line, 100% branch). Effective in deterministic validation but limited test diversity.</li>
+  <li><strong>Groq Step Chain of Thought</strong> — Stronger branch expansion with 96.7% branch reach. Fails 3 problems due to boundary logic errors.</li>
+  <li><strong>Gemini Chain of Thought</strong> — Broader semantic diversity; 28% line but 98.8% branch coverage across 12 problems.</li>
+  <li><strong>Gemini Step Chain of Thought</strong> — Best branch exploration (99.2%) and largest code footprint (258 statements), but shallow per-line coverage (24%).</li>
+</ul>
+
+<h2>💡 Comparative Overview</h2>
+<table>
+<thead>
+<tr>
+  <th>Model</th>
+  <th>Variant</th>
+  <th>Focus Behavior</th>
+  <th>Strength</th>
+  <th>Weakness</th>
+  <th>Best Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Groq</td>
+  <td>Chain</td>
+  <td>Deterministic test consistency</td>
+  <td>Perfect branch coverage</td>
+  <td>Lower code reach (33%)</td>
+  <td>Regression verification</td>
+</tr>
+<tr>
+  <td>Groq</td>
+  <td>Step</td>
+  <td>Iterative reasoning-driven coverage</td>
+  <td>Deep branch traversal</td>
+  <td>Limited statement reach (30%)</td>
+  <td>Incremental coverage improvement</td>
+</tr>
+<tr>
+  <td>Gemini</td>
+  <td>Chain</td>
+  <td>Diverse path generation</td>
+  <td>Explores new logical paths</td>
+  <td>Lower total execution density</td>
+  <td>Exploratory testing</td>
+</tr>
+<tr>
+  <td>Gemini</td>
+  <td>Step</td>
+  <td>Large-scale generative testing</td>
+  <td>High branch exploration (99%)</td>
+  <td>Low line coverage (24%)</td>
+  <td>Fault detection and fuzz-style testing</td>
+</tr>
+</tbody>
+</table>
+
+<p class="notes">
+<strong>Final Summary:</strong><br>
+Groq models demonstrate structured, reliable test coverage suited for regression validation.  
+Gemini models show adaptive, generative coverage patterns ideal for exploratory fault discovery.  
+“Step” variants for both systems improve branch exploration but may trade off raw line execution.  
+Together, these four results provide complementary validation strategies across deterministic and generative LLM test behaviors.
+</p>
+
+</body>
+</html>

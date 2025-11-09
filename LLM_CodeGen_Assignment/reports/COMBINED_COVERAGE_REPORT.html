@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Combined Model Coverage Report</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 30px;
+            background: #f8f9fa;
+        }
+        
+        .summary-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 5px solid #667eea;
+            transition: transform 0.3s;
+        }
+        
+        .summary-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0,0,0,0.15);
+        }
+        
+        .summary-card h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        
+        .summary-card .value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #333;
+            margin: 10px 0;
+        }
+        
+        .summary-card .label {
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .model-section {
+            margin-bottom: 40px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .model-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        
+        .model-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+        
+        .stat-box {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .stat-box .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .stat-box .stat-label {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+        
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .status-passed {
+            background: #d4edda;
+            color: #155724;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            display: inline-block;
+        }
+        
+        .status-failed {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            display: inline-block;
+        }
+        
+        .coverage-bar {
+            width: 100%;
+            height: 20px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .coverage-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745 0%, #20c997 100%);
+            transition: width 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+        
+        .coverage-low { background: linear-gradient(90deg, #dc3545 0%, #e74c3c 100%); }
+        .coverage-medium { background: linear-gradient(90deg, #ffc107 0%, #ff9800 100%); }
+        .coverage-high { background: linear-gradient(90deg, #28a745 0%, #20c997 100%); }
+        
+        .notes {
+            font-size: 0.85em;
+            color: #666;
+            font-style: italic;
+        }
+        
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            border-top: 2px solid #e0e0e0;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .container {
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 Combined Model Coverage Report</h1>
+            <p>Comprehensive Analysis of Test Results and Code Coverage</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">Generated: 2025-11-09 13:20:06</p>
+        </div>
+        
+        
+        <div class="summary">
+            <div class="summary-card">
+                <h3>📊 Total Tests</h3>
+                <div class="value">39</div>
+                <div class="label">Test Cases Executed</div>
+            </div>
+            <div class="summary-card">
+                <h3>✅ Tests Passed</h3>
+                <div class="value">29</div>
+                <div class="label">74.4% Pass Rate</div>
+            </div>
+            <div class="summary-card">
+                <h3>📈 Average Coverage</h3>
+                <div class="value">98.0%</div>
+                <div class="label">Line Coverage</div>
+            </div>
+            <div class="summary-card">
+                <h3>🤖 Models Analyzed</h3>
+                <div class="value">4</div>
+                <div class="label">GROQ & Gemini</div>
+            </div>
+        </div>
+        
+        
+        <div class="content">
+            
+            <div class="model-section">
+                <div class="model-header">GROQ Chain of Thought</div>
+                
+                <div class="model-stats">
+                    <div class="stat-box">
+                        <div class="stat-value">8/12</div>
+                        <div class="stat-label">Tests Passed</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">66.7%</div>
+                        <div class="stat-label">Pass Rate</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">100.0%</div>
+                        <div class="stat-label">Avg Coverage</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">45</div>
+                        <div class="stat-label">Total Assertions</div>
+                    </div>
+                </div>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Problem</th>
+                            <th>Status</th>
+                            <th>Tests</th>
+                            <th>Line Coverage</th>
+                            <th>Branch Coverage</th>
+                            <th>Statements</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                <tr>
+                    <td><strong>humaneval_0</strong></td>
+                    <td><span class="status-passed">PASSED</span></td>
+                    <td>5 assertions</td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 100.0%">
+                                100.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>7 total</td>
+                    <td class="notes">Perfect coverage</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>humaneval_1</strong></td>
+                    <td><span class="status-failed">FAILED</span></td>
+                    <td>3 assertions</td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 100.0%">
+                                100.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>5 total</td>
+                    <td class="notes">Test failed, Perfect coverage</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>humaneval_2</strong></td>
+                    <td><span class="status-passed">PASSED</span></td>
+                    <td>3 assertions</td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 100.0%">
+                                100.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>3 total</td>
+                    <td class="notes">Perfect coverage</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>humaneval_3</strong></td>
+                    <td><span class="status-passed">PASSED</span></td>
+                    <td>4 assertions</td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 100.0%">
+                                100.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>8 total</td>
+                    <td class="notes">Perfect coverage</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>humaneval_4</strong></td>
+                    <td><span class="status-passed">PASSED</span></td>
+                    <td>3 assertions</td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 100.0%">
+                                100.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>5 total</td>
+                    <td class="notes">Perfect coverage</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>humaneval_5</strong></td>
+                    <td><span class="status-passed">PASSED</span></td>
+                    <td>3 assertions</td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 100.0%">
+                                100.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>8 total</td>
+                    <td class="notes">Perfect coverage</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>humaneval_6</strong></td>
+                    <td><span class="status-passed">PASSED</span></td>
+                    <td>3 assertions</td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 100.0%">
+                                100.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>3 total</td>
+                    <td class="notes">Perfect coverage</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>humaneval_7</strong></td>
+                    <td><span class="status-passed">PASSED</span></td>
+                    <td>4 assertions</td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 100.0%">
+                                100.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>8 total</td>
+                    <td class="notes">Perfect coverage</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>humaneval_8</strong></td>
+                    <td><span class="status-passed">PASSED</span></td>
+                    <td>4 assertions</td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 100.0%">
+                                100.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>9 total</td>
+                    <td class="notes">Perfect coverage</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>humaneval_9</strong></td>
+                    <td><span class="status-failed">FAILED</span></td>
+                    <td>5 assertions</td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 100.0%">
+                                100.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>2 total</td>
+                    <td class="notes">Test failed, Perfect coverage</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>humaneval_1</strong></td>
+                    <td><span class="status-failed">FAILED</span></td>
+                    <td>3 assertions</td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 100.0%">
+                                100.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>5 total</td>
+                    <td class="notes">Test failed, Perfect coverage</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>humaneval_9</strong></td>
+                    <td><span class="status-failed">FAILED</span></td>
+                    <td>5 assertions</td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 100.0%">
+                                100.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>2 total</td>
+                    <td class="notes">Test failed, Perfect coverage</td>
+                </tr>
+            
+                    </tbody>
+                </table>
+            </div>
+            
+
+            <div class="model-section">
+                <div class="model-header">GROQ Step Chain of Thought</div>
+                
+                <div class="model-stats">
+                    <div class="stat-box">
+                        <div class="stat-value">7/13</div>
+                        <div class="stat-label">Tests Passed</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">53.8%</div>
+                        <div class="stat-label">Pass Rate</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">96.1%</div>
+                        <div class="stat-label">Avg Coverage</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">48</div>
+                        <div class="stat-label">Total Assertions</div>
+                    </div>
+                </div>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Problem</th>
+                            <th>Status</th>
+                            <th>Tests</th>
+                            <th>Line Coverage</th>
+                            <th>Branch Coverage</th>
+                            <th>Statements</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                <tr>
+                    <td><strong>humaneval_0</strong></td>
+                    <td><span class="status-passed">PASSED</span></td>
+                    <td>5 assertions</td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 88.88888888888889%">
+                                88.9%
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>9 total</td>
+                    <td class="notes">1 lines missed</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>humaneval_1</strong></td>
+                    <td><span class="status-failed">FAILED</span></td>
+                    <td>3 assertions</td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 94.44444444444444%">
+                                94.4%
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>18 total</td>
+                    <td class="notes">Test failed, 1 lines missed</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>humaneval_2</strong></td>
+                    <td><span class="status-passed">PASSED</span></td>
+                    <td>3 assertions</td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 100.0%">
+                                100.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>3 total</td>
+                    <td class="notes">Perfect coverage</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>humaneval_3</strong></td>
+                    <td><span class="status-passed">PASSED</span></td>
+                    <td>4 assertions</td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 100.0%">
+                                100.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>8 total</td>
+                    <td class="notes">Perfect coverage</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>humaneval_4</strong></td>
+                    <td><span class="status-failed">FAILED</span></td>
+                    <td>3 assertions</td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 85.71428571428571%">
+                                85.7%
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>7 total</td>
+                    <td class="notes">Test failed, 1 lines missed</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>humaneval_5</strong></td>
+                    <td><span class="status-passed">PASSED</span></td>
+                    <td>3 assertions</td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 100.0%">
+                                100.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>8 total</td>
+                    <td class="notes">Perfect coverage</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>humaneval_6</strong></td>
+                    <td><span class="status-passed">PASSED</span></td>
+                    <td>3 assertions</td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 100.0%">
+                                100.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>7 total</td>
+                    <td class="notes">Perfect coverage</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>humaneval_7</strong></td>
+                    <td><span class="status-passed">PASSED</span></td>
+                    <td>4 assertions</td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 100.0%">
+                                100.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>8 total</td>
+                    <td class="notes">Perfect coverage</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>humaneval_8</strong></td>
+                    <td><span class="status-passed">PASSED</span></td>
+                    <td>4 assertions</td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 100.0%">
+                                100.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>9 total</td>
+                    <td class="notes">Perfect coverage</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>humaneval_9</strong></td>
+                    <td><span class="status-failed">FAILED</span></td>
+                    <td>5 assertions</td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 100.0%">
+                                100.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>3 total</td>
+                    <td class="notes">Test failed, Perfect coverage</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>humaneval_1</strong></td>
+                    <td><span class="status-failed">FAILED</span></td>
+                    <td>3 assertions</td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 94.44444444444444%">
+                                94.4%
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>18 total</td>
+                    <td class="notes">Test failed, 1 lines missed</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>humaneval_4</strong></td>
+                    <td><span class="status-failed">FAILED</span></td>
+                    <td>3 assertions</td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 85.71428571428571%">
+                                85.7%
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>7 total</td>
+                    <td class="notes">Test failed, 1 lines missed</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>humaneval_9</strong></td>
+                    <td><span class="status-failed">FAILED</span></td>
+                    <td>5 assertions</td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 100.0%">
+                                100.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-high" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>3 total</td>
+                    <td class="notes">Test failed, Perfect coverage</td>
+                </tr>
+            
+                    </tbody>
+                </table>
+            </div>
+            
+
+            <div class="model-section">
+                <div class="model-header">Gemini Chain of Thought</div>
+                
+                <div class="model-stats">
+                    <div class="stat-box">
+                        <div class="stat-value">8/8</div>
+                        <div class="stat-label">Tests Passed</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">100.0%</div>
+                        <div class="stat-label">Pass Rate</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">0.0%</div>
+                        <div class="stat-label">Avg Coverage</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">28</div>
+                        <div class="stat-label">Total Assertions</div>
+                    </div>
+                </div>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Problem</th>
+                            <th>Status</th>
+                            <th>Tests</th>
+                            <th>Line Coverage</th>
+                            <th>Branch Coverage</th>
+                            <th>Statements</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                <tr>
+                    <td><strong>humaneval_0</strong></td>
+                    <td><span class="status-passed">PASSED</span></td>
+                    <td>5 assertions</td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-low" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-low" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>0 total</td>
+                    <td class="notes">No coverage</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>humaneval_1</strong></td>
+                    <td><span class="status-passed">PASSED</span></td>
+                    <td>3 assertions</td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-low" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-low" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>0 total</td>
+                    <td class="notes">No coverage</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>humaneval_2</strong></td>
+                    <td><span class="status-passed">PASSED</span></td>
+                    <td>3 assertions</td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-low" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-low" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>0 total</td>
+                    <td class="notes">No coverage</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>humaneval_3</strong></td>
+                    <td><span class="status-passed">PASSED</span></td>
+                    <td>4 assertions</td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-low" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-low" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>0 total</td>
+                    <td class="notes">No coverage</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>humaneval_4</strong></td>
+                    <td><span class="status-passed">PASSED</span></td>
+                    <td>3 assertions</td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-low" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-low" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>0 total</td>
+                    <td class="notes">No coverage</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>humaneval_5</strong></td>
+                    <td><span class="status-passed">PASSED</span></td>
+                    <td>3 assertions</td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-low" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-low" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>0 total</td>
+                    <td class="notes">No coverage</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>humaneval_6</strong></td>
+                    <td><span class="status-passed">PASSED</span></td>
+                    <td>3 assertions</td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-low" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-low" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>0 total</td>
+                    <td class="notes">No coverage</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>humaneval_7</strong></td>
+                    <td><span class="status-passed">PASSED</span></td>
+                    <td>4 assertions</td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-low" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-low" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>0 total</td>
+                    <td class="notes">No coverage</td>
+                </tr>
+            
+                    </tbody>
+                </table>
+            </div>
+            
+
+            <div class="model-section">
+                <div class="model-header">Gemini Step Chain of Thought</div>
+                
+                <div class="model-stats">
+                    <div class="stat-box">
+                        <div class="stat-value">6/6</div>
+                        <div class="stat-label">Tests Passed</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">100.0%</div>
+                        <div class="stat-label">Pass Rate</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">0.0%</div>
+                        <div class="stat-label">Avg Coverage</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">20</div>
+                        <div class="stat-label">Total Assertions</div>
+                    </div>
+                </div>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Problem</th>
+                            <th>Status</th>
+                            <th>Tests</th>
+                            <th>Line Coverage</th>
+                            <th>Branch Coverage</th>
+                            <th>Statements</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                <tr>
+                    <td><strong>humaneval_1</strong></td>
+                    <td><span class="status-passed">PASSED</span></td>
+                    <td>3 assertions</td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-low" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-low" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>0 total</td>
+                    <td class="notes">No coverage</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>humaneval_2</strong></td>
+                    <td><span class="status-passed">PASSED</span></td>
+                    <td>3 assertions</td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-low" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-low" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>0 total</td>
+                    <td class="notes">No coverage</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>humaneval_3</strong></td>
+                    <td><span class="status-passed">PASSED</span></td>
+                    <td>4 assertions</td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-low" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-low" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>0 total</td>
+                    <td class="notes">No coverage</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>humaneval_4</strong></td>
+                    <td><span class="status-passed">PASSED</span></td>
+                    <td>3 assertions</td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-low" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-low" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>0 total</td>
+                    <td class="notes">No coverage</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>humaneval_5</strong></td>
+                    <td><span class="status-passed">PASSED</span></td>
+                    <td>3 assertions</td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-low" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-low" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>0 total</td>
+                    <td class="notes">No coverage</td>
+                </tr>
+            
+
+                <tr>
+                    <td><strong>humaneval_7</strong></td>
+                    <td><span class="status-passed">PASSED</span></td>
+                    <td>4 assertions</td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-low" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="coverage-bar">
+                            <div class="coverage-fill coverage-low" style="width: 0%">
+                                0.0%
+                            </div>
+                        </div>
+                    </td>
+                    <td>0 total</td>
+                    <td class="notes">No coverage</td>
+                </tr>
+            
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
+        
+        <div class="footer">
+            <p>Generated by Pytest Coverage Analysis Pipeline</p>
+            <p style="margin-top: 5px; font-size: 0.9em;">Models: GROQ & Gemini | Strategies: Chain of Thought & Step Chain of Thought</p>
+        </div>
+    </div>
+</body>
+</html>

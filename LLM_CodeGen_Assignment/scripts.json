@@ -1,0 +1,19 @@
+{
+  "scripts": {
+    "test": "python -m pytest tests/ -v",
+    "test:coverage": "python -m pytest --cov=generated --cov-report=html --cov-report=term-missing --cov-branch -v",
+    "test:single": "python -m pytest generated/multi_modal_simple/ --cov=multi_modal_simple --cov-report=term-missing -v",
+    "test:all": "python -m pytest generated/ --cov=generated --cov-report=html:coverage_html --cov-report=term-missing --cov-branch -v",
+    "lint": "python -m flake8 generated/ tests/",
+    "lint:type": "python -m mypy generated/ --ignore-missing-imports",
+    "format": "python -m black generated/ tests/",
+    "format:check": "python -m black --check generated/ tests/",
+    "clean": "find . -name '__pycache__' -type d -exec rm -rf {} + && find . -name '*.pyc' -delete",
+    "install": "pip install -r requirements.txt",
+    "install:dev": "pip install -r requirements.txt && pip install -e .",
+    "coverage:report": "python -m coverage report --show-missing",
+    "coverage:html": "python -m coverage html",
+    "help": "python run_tests.py --help"
+  },
+  "description": "Test scripts for LLM CodeGen evaluation project"
+}

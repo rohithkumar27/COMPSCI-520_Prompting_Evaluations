@@ -1,3 +1,4 @@
+from typing import List
 # Gemini solution using step_chain_of_thought (Attempt 1/1)
 # Dataset: Unknown
 # Problem: Easy/0

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Assertion Summary Table</title>
+<style>
+  body { font-family: Arial, sans-serif; background: #f9fafb; color: #222; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 15px; }
+  th, td { padding: 10px; border: 1px solid #ccc; text-align: center; }
+  th { background: #1f2937; color: white; }
+  tr:nth-child(even) { background-color: #f2f2f2; }
+  .pass { background-color: #d1fae5; font-weight: bold; }
+  .fail { background-color: #fee2e2; }
+  .na { color: #9ca3af; font-style: italic; }
+  caption { font-size: 18px; font-weight: bold; margin-bottom: 10px; }
+</style>
+</head>
+<body>
+
+<table>
+  <caption>Assertion Summary – Groq & Gemini (Chain vs Step)</caption>
+  <tr>
+    <th>Problem</th>
+    <th>Assertions</th>
+    <th>Groq CoT</th>
+    <th>Groq Step</th>
+    <th>Gemini CoT</th>
+    <th>Gemini Step</th>
+  </tr>
+  <tr><td>HE0: has_close_elements</td><td>5</td><td class="pass">5/5</td><td class="pass">5/5</td><td class="pass">5/5</td><td class="pass">5/5</td></tr>
+  <tr><td>HE1: separate_paren_groups</td><td>3</td><td class="fail">0/3</td><td class="fail">0/3</td><td class="pass">3/3</td><td class="pass">3/3</td></tr>
+  <tr><td>HE2: truncate_number</td><td>3</td><td class="pass">3/3</td><td class="pass">3/3</td><td class="pass">3/3</td><td class="pass">3/3</td></tr>
+  <tr><td>HE3: below_zero</td><td>4</td><td class="pass">4/4</td><td class="pass">4/4</td><td class="pass">4/4</td><td class="pass">4/4</td></tr>
+  <tr><td>HE4: mean_absolute_deviation</td><td>3</td><td class="pass">3/3</td><td class="fail">0/3</td><td class="pass">3/3</td><td class="pass">3/3</td></tr>
+  <tr><td>HE5: intersperse</td><td>3</td><td class="pass">3/3</td><td class="pass">3/3</td><td class="pass">3/3</td><td class="pass">3/3</td></tr>
+  <tr><td>HE6: filter_by_substring</td><td>3</td><td class="pass">3/3</td><td class="pass">3/3</td><td class="pass">3/3</td><td class="na">N/A</td></tr>
+  <tr><td>HE7: sum_product</td><td>4</td><td class="pass">4/4</td><td class="pass">4/4</td><td class="pass">4/4</td><td class="pass">4/4</td></tr>
+  <tr><td>HE8: rolling_max</td><td>4</td><td class="pass">4/4</td><td class="pass">4/4</td><td class="na">N/A</td><td class="na">N/A</td></tr>
+  <tr><td>HE9: is_palindrome</td><td>5</td><td class="fail">0/5</td><td class="fail">0/5</td><td class="na">N/A</td><td class="na">N/A</td></tr>
+  <tr><td>APPS0: knapsack</td><td>3</td><td class="na">N/A</td><td class="na">N/A</td><td class="fail">0/3</td><td class="fail">0/3</td></tr>
+  <tr><td>APPS1: shortest_path</td><td>3</td><td class="na">N/A</td><td class="na">N/A</td><td class="fail">0/3</td><td class="fail">0/3</td></tr>
+  <tr style="font-weight:bold; background:#e5e7eb;">
+    <td>Total</td>
+    <td>49</td>
+    <td>29/37</td>
+    <td>26/37</td>
+    <td>28/34</td>
+    <td>20/26</td>
+  </tr>
+</table>
+
+</body>
+</html>

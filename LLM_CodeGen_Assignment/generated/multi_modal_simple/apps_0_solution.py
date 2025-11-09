@@ -3,6 +3,7 @@
 # Generated: 2025-10-22 19:46:19
 
 import math
+from typing import Any
 
 def solve_knapsack_variant(n, w, k, items):
     """

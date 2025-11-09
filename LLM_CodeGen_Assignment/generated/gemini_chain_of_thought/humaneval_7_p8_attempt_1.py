@@ -1,3 +1,4 @@
+from typing import List, Tuple
 # Gemini solution using chain_of_thought (Attempt 1/3)
 # Dataset: Unknown
 # Problem: Easy/7
