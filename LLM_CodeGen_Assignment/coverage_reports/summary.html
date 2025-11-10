@@ -1,136 +1,253 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<title>LLM Coverage Comparison — Groq vs Gemini</title>
-<style>
-  body { font-family: Arial, Helvetica, sans-serif; margin: 24px; color: #222; }
-  h1 { color: #0b6fb2; }
-  table { border-collapse: collapse; width: 100%; margin-bottom: 30px; font-size: 14px; }
-  th, td { border: 1px solid #ccc; padding: 8px 10px; text-align: left; }
-  th { background: #e8f2fa; }
-  tr:nth-child(even) { background: #fafcff; }
-  .model-header { background:#0b6fb2; color:#fff; text-align:center; }
-  .highlight { background:#f5faff; font-weight:600; }
-</style>
+    <meta charset="utf-8">
+    <title>LLM Coverage Comparison — Groq vs Gemini</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 24px;
+            color: #222;
+        }
+
+        h1 {
+            color: #0b6fb2;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 8px 10px;
+            text-align: left;
+        }
+
+        th {
+            background: #e8f2fa;
+        }
+
+        tr:nth-child(even) {
+            background: #fafcff;
+        }
+
+        .model-header {
+            background: #0b6fb2;
+            color: #fff;
+            text-align: center;
+        }
+
+        .highlight {
+            background: #f5faff;
+            font-weight: 600;
+        }
+    </style>
 </head>
+
 <body>
 
-<h1>Unified LLM Coverage Comparison (Groq &amp; Gemini — Chain &amp; Step)</h1>
-<p>This consolidated report merges all four coverage results with computed branch % values using  
-<code>(branches − partial)/branches × 100</code>. “N/A” indicates no branching logic.</p>
+    <h1>Unified LLM Coverage Comparison (Groq &amp; Gemini — Chain &amp; Step)</h1>
+    <p>This consolidated report merges all four coverage results with computed branch % values using
+        <code>(branches − partial)/branches × 100</code>. “N/A” indicates no branching logic.
+    </p>
 
-<table>
-<thead>
-<tr class="model-header">
-  <th rowspan="2">Problem File</th>
-  <th colspan="2">Groq Chain of Thought</th>
-  <th colspan="2">Groq Step Chain of Thought</th>
-  <th colspan="2">Gemini Chain of Thought</th>
-  <th colspan="2">Gemini Step Chain of Thought</th>
-  <th rowspan="2">Notes / Highlights</th>
-</tr>
-<tr>
-  <th>Line %</th><th>Branch %</th>
-  <th>Line %</th><th>Branch %</th>
-  <th>Line %</th><th>Branch %</th>
-  <th>Line %</th><th>Branch %</th>
-</tr>
-</thead>
-<tbody>
+    <table>
+        <thead>
+            <tr class="model-header">
+                <th rowspan="2">Problem File</th>
+                <th colspan="2">Groq Chain of Thought</th>
+                <th colspan="2">Groq Step Chain of Thought</th>
+                <th colspan="2">Gemini Chain of Thought</th>
+                <th colspan="2">Gemini Step Chain of Thought</th>
+                <th rowspan="2">Notes / Highlights</th>
+            </tr>
+            <tr>
+                <th>Line %</th>
+                <th>Branch %</th>
+                <th>Line %</th>
+                <th>Branch %</th>
+                <th>Line %</th>
+                <th>Branch %</th>
+                <th>Line %</th>
+                <th>Branch %</th>
+            </tr>
+        </thead>
+        <tbody>
 
-<tr><td>humaneval_0_p1_attempt_1.py</td>
-  <td>100</td><td>100</td>
-  <td>87</td><td>83</td>
-  <td>100</td><td>100</td>
-  <td>92</td><td>90</td>
-  <td>Groq step & Gemini step both left minor partial branches uncovered.</td></tr>
+            <tr>
+                <td>humaneval_0_p1_attempt_1.py</td>
+                <td>100</td>
+                <td>100</td>
+                <td>87</td>
+                <td>83</td>
+                <td>100</td>
+                <td>100</td>
+                <td>92</td>
+                <td>90</td>
+                <td>Groq step & Gemini step both left minor partial branches uncovered.</td>
+            </tr>
 
-<tr><td>humaneval_1_p2_attempt_1.py</td>
-  <td>100</td><td>N/A</td>
-  <td>90</td><td>83</td>
-  <td>96</td><td>90</td>
-  <td>88</td><td>85</td>
-  <td>Gemini chain nearly complete; Groq step missed one branch.</td></tr>
+            <tr>
+                <td>humaneval_1_p2_attempt_1.py</td>
+                <td>100</td>
+                <td>N/A</td>
+                <td>90</td>
+                <td>83</td>
+                <td>96</td>
+                <td>90</td>
+                <td>88</td>
+                <td>85</td>
+                <td>Gemini chain nearly complete; Groq step missed one branch.</td>
+            </tr>
 
-<tr><td>humaneval_2_p3_attempt_1.py</td>
-  <td>100</td><td>N/A</td>
-  <td>100</td><td>N/A</td>
-  <td>100</td><td>N/A</td>
-  <td>100</td><td>N/A</td>
-  <td>No branching logic — fully covered across models.</td></tr>
+            <tr>
+                <td>humaneval_2_p3_attempt_1.py</td>
+                <td>100</td>
+                <td>N/A</td>
+                <td>100</td>
+                <td>N/A</td>
+                <td>100</td>
+                <td>N/A</td>
+                <td>100</td>
+                <td>N/A</td>
+                <td>No branching logic — fully covered across models.</td>
+            </tr>
 
-<tr><td>humaneval_3_p4_attempt_1.py</td>
-  <td>100</td><td>100</td>
-  <td>100</td><td>100</td>
-  <td>100</td><td>100</td>
-  <td>96</td><td>95</td>
-  <td>All models achieved full coverage; Gemini step slightly lower.</td></tr>
+            <tr>
+                <td>humaneval_3_p4_attempt_1.py</td>
+                <td>100</td>
+                <td>100</td>
+                <td>100</td>
+                <td>100</td>
+                <td>100</td>
+                <td>100</td>
+                <td>96</td>
+                <td>95</td>
+                <td>All models achieved full coverage; Gemini step slightly lower.</td>
+            </tr>
 
-<tr><td>humaneval_4_p5_attempt_1.py</td>
-  <td>100</td><td>N/A</td>
-  <td>78</td><td>50</td>
-  <td>78</td><td>50</td>
-  <td>81</td><td>60</td>
-  <td>Both Groq & Gemini step revealed untested validation branch.</td></tr>
+            <tr>
+                <td>humaneval_4_p5_attempt_1.py</td>
+                <td>100</td>
+                <td>N/A</td>
+                <td>78</td>
+                <td>50</td>
+                <td>78</td>
+                <td>50</td>
+                <td>81</td>
+                <td>60</td>
+                <td>Both Groq & Gemini step revealed untested validation branch.</td>
+            </tr>
 
-<tr><td>humaneval_5_p6_attempt_1.py</td>
-  <td>100</td><td>100</td>
-  <td>100</td><td>100</td>
-  <td>100</td><td>100</td>
-  <td>100</td><td>100</td>
-  <td>All branches executed — no missing statements.</td></tr>
+            <tr>
+                <td>humaneval_5_p6_attempt_1.py</td>
+                <td>100</td>
+                <td>100</td>
+                <td>100</td>
+                <td>100</td>
+                <td>100</td>
+                <td>100</td>
+                <td>100</td>
+                <td>100</td>
+                <td>All branches executed — no missing statements.</td>
+            </tr>
 
-<tr><td>humaneval_6_p7_attempt_1.py</td>
-  <td>100</td><td>N/A</td>
-  <td>100</td><td>100</td>
-  <td>100</td><td>100</td>
-  <td>97</td><td>90</td>
-  <td>Gemini step partial on one boundary condition.</td></tr>
+            <tr>
+                <td>humaneval_6_p7_attempt_1.py</td>
+                <td>100</td>
+                <td>N/A</td>
+                <td>100</td>
+                <td>100</td>
+                <td>100</td>
+                <td>100</td>
+                <td>97</td>
+                <td>90</td>
+                <td>Gemini step partial on one boundary condition.</td>
+            </tr>
 
-<tr><td>humaneval_7_p8_attempt_1.py</td>
-  <td>100</td><td>100</td>
-  <td>100</td><td>100</td>
-  <td>100</td><td>100</td>
-  <td>100</td><td>100</td>
-  <td>Consistent full coverage across models.</td></tr>
+            <tr>
+                <td>humaneval_7_p8_attempt_1.py</td>
+                <td>100</td>
+                <td>100</td>
+                <td>100</td>
+                <td>100</td>
+                <td>100</td>
+                <td>100</td>
+                <td>100</td>
+                <td>100</td>
+                <td>Consistent full coverage across models.</td>
+            </tr>
 
-<tr><td>humaneval_8_p9_attempt_1.py</td>
-  <td>100</td><td>100</td>
-  <td>100</td><td>100</td>
-  <td>100</td><td>100</td>
-  <td>99</td><td>95</td>
-  <td>Minor line not executed in Gemini step variant.</td></tr>
+            <tr>
+                <td>humaneval_8_p9_attempt_1.py</td>
+                <td>100</td>
+                <td>100</td>
+                <td>100</td>
+                <td>100</td>
+                <td>100</td>
+                <td>100</td>
+                <td>99</td>
+                <td>95</td>
+                <td>Minor line not executed in Gemini step variant.</td>
+            </tr>
 
-<tr><td>humaneval_9_p10_attempt_1.py</td>
-  <td>100</td><td>N/A</td>
-  <td>100</td><td>N/A</td>
-  <td>100</td><td>N/A</td>
-  <td>100</td><td>N/A</td>
-  <td>Trivial function — no branch logic.</td></tr>
+            <tr>
+                <td>humaneval_9_p10_attempt_1.py</td>
+                <td>100</td>
+                <td>N/A</td>
+                <td>100</td>
+                <td>N/A</td>
+                <td>100</td>
+                <td>N/A</td>
+                <td>100</td>
+                <td>N/A</td>
+                <td>Trivial function — no branch logic.</td>
+            </tr>
 
-<tr><td>apps_0_p1_attempt_1.py</td>
-  <td>–</td><td>–</td>
-  <td>–</td><td>–</td>
-  <td>100</td><td>100</td>
-  <td>95</td><td>90</td>
-  <td>Gemini models only; full coverage achieved in chain mode.</td></tr>
+            <tr>
+                <td>apps_0_p1_attempt_1.py</td>
+                <td>–</td>
+                <td>–</td>
+                <td>–</td>
+                <td>–</td>
+                <td>100</td>
+                <td>100</td>
+                <td>95</td>
+                <td>90</td>
+                <td>Gemini models only; full coverage achieved in chain mode.</td>
+            </tr>
 
-<tr><td>apps_1_p2_attempt_1.py</td>
-  <td>–</td><td>–</td>
-  <td>–</td><td>–</td>
-  <td>42</td><td>100</td>
-  <td>55</td><td>95</td>
-  <td>Complex nested conditions; large untested portions remain.</td></tr>
+            <tr>
+                <td>apps_1_p2_attempt_1.py</td>
+                <td>–</td>
+                <td>–</td>
+                <td>–</td>
+                <td>–</td>
+                <td>100</td>
+                <td>100</td>
+                <td>55</td>
+                <td>95</td>
+                <td>Gemini chain achieved full coverage after fixing deque import.</td>
+            </tr>
 
-</tbody>
+        </tbody>
 
-<tfoot>
-<tr class="highlight">
-  <td><strong>Overall Average</strong></td>
-  <td>100</td><td>100</td>
-  <td>94</td><td>89</td>
-  <td>80</td><td>97</td>
-  <td>85</td><td>92</td>
-  <td>Groq Chain best line coverage; Gemini Chain best branch discovery; Groq Step balanced results.</td>
-</tr
+        <tfoot>
+            <tr class="highlight">
+                <td><strong>Overall Average</strong></td>
+                <td>100</td>
+                <td>100</td>
+                <td>94</td>
+                <td>89</td>
+                <td>80</td>
+                <td>97</td>
+                <td>85</td>
+                <td>92</td>
+                <td>Groq Chain best line coverage; Gemini Chain best branch discovery; Groq Step balanced results.</td>
+            </tr

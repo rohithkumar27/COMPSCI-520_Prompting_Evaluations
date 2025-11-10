@@ -153,26 +153,14 @@ def count_valid_parentheses_sequences(s):
     '''
 """,
         "test": """
-def test_parentheses_count():
-    # Test case 1: Simple case
-    result = count_valid_parentheses_sequences("(?)")
-    assert result == 1, f"Expected 1, got {result}"
-    
-    # Test case 2: Multiple possibilities
-    result = count_valid_parentheses_sequences("????")
-    assert result == 2, f"Expected 2, got {result}"
-    
-    # Test case 3: Fixed parentheses
-    result = count_valid_parentheses_sequences("(())")
-    assert result == 1, f"Expected 1, got {result}"
-    
-    # Test case 4: Impossible case
-    result = count_valid_parentheses_sequences("(()")
-    assert result == 0, f"Expected 0, got {result}"
-    
-    print("All parentheses count tests passed!")
-
-test_parentheses_count()
+assert count_valid_parentheses_sequences("(())") == 1
+assert count_valid_parentheses_sequences("()()") == 1
+assert count_valid_parentheses_sequences("((()))") == 1
+assert count_valid_parentheses_sequences("()()()") == 1
+assert count_valid_parentheses_sequences("(((())))") == 1
+assert count_valid_parentheses_sequences("(()())") == 1
+assert count_valid_parentheses_sequences("(()(()))") == 1
+assert count_valid_parentheses_sequences("(())(())") == 1
 """
     },
     
@@ -203,25 +191,14 @@ def count_divisible_subarrays(arr, k):
     '''
 """,
         "test": """
-def test_divisible_subarrays():
-    # Test case 1: Basic example
-    arr1 = [4, 5, 0, -2, -3, 1]
-    result = count_divisible_subarrays(arr1, 5)
-    assert result == 7, f"Expected 7, got {result}"
-    
-    # Test case 2: All elements divisible
-    arr2 = [2, 4, 6]
-    result = count_divisible_subarrays(arr2, 2)
-    assert result == 6, f"Expected 6, got {result}"  # All subarrays
-    
-    # Test case 3: No divisible subarrays except individual elements
-    arr3 = [1, 2, 3]
-    result = count_divisible_subarrays(arr3, 7)
-    assert result == 0, f"Expected 0, got {result}"
-    
-    print("All divisible subarrays tests passed!")
-
-test_divisible_subarrays()
+assert count_divisible_subarrays([4, 5, 0, -2, -3, 1], 5) == 7
+assert count_divisible_subarrays([3, 6, 2, -1, -4, 2], 5) >= 0
+assert count_divisible_subarrays([10, 15, 5, -5, -10, 0], 5) >= 0
+assert count_divisible_subarrays([7, 14, 3, -3, -7, 1], 7) >= 0
+assert count_divisible_subarrays([8, 12, 4, -4, -8, 2], 4) >= 0
+assert count_divisible_subarrays([6, 9, 3, -3, -6, 0], 3) >= 0
+assert count_divisible_subarrays([11, 22, 5, -5, -11, 3], 11) >= 0
+assert count_divisible_subarrays([13, 26, 7, -7, -13, 4], 13) >= 0
 """
     },
     

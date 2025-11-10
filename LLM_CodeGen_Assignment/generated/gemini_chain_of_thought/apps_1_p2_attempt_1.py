@@ -1,4 +1,5 @@
 from typing import List
+from collections import deque
 # Gemini solution using chain_of_thought (Attempt 1/3)
 # Dataset: Unknown
 # Problem: APPS/1
