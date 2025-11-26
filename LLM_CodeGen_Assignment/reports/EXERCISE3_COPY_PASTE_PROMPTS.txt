@@ -1,0 +1,116 @@
+================================================================================
+EXERCISE 3 - PART 1: COPY-PASTE PROMPTS FOR LLM
+================================================================================
+
+Instructions:
+1. Copy the prompt below (including the triple backticks)
+2. Paste it into ChatGPT, Claude, or Gemini
+3. Save the LLM's response
+4. Repeat for the second problem
+
+================================================================================
+PROMPT FOR PROBLEM 1: Count Valid Parentheses Sequences
+================================================================================
+
+Problem description: 
+Given a string containing '(', ')', and '?', where '?' can be either '(' or ')'.
+Count the number of ways to replace '?' characters such that the resulting string
+has valid parentheses.
+
+A valid parentheses string is one where:
+1. Every '(' has a matching ')'
+2. At no point do we have more ')' than '(' when reading left to right
+
+Return the count modulo 10^9 + 7.
+
+Examples:
+- "(?)" -> 1 way: "()"
+- "(??))" -> 1 way: "(())"  
+- "????" -> 2 ways: "(())" and "()()"
+
+Method signature: 
+def count_valid_parentheses_sequences(s: str) -> int
+
+Please write formal specifications as Python assertions that describe the correct 
+behavior of this method. Let 'res' denote the expected return value of 
+'count_valid_parentheses_sequences(s)'. 
+
+IMPORTANT CONSTRAINTS:
+- Do NOT call 'count_valid_parentheses_sequences()' in your assertions
+- Do NOT use methods with side effects such as:
+  - print, input, file I/O operations
+  - random number generation (random.random(), etc.)
+  - timing functions (datetime.now(), time.time(), etc.)
+  - data structure modifications (list.append(), dict.update(), etc.)
+- Express the relationship between 's' and 'res' using ONLY:
+  - Pure string operations (len(), count(), indexing, slicing)
+  - Arithmetic operations (+, -, *, //, %, **)
+  - Boolean logic (and, or, not, ==, !=, <, >, <=, >=)
+  - Conditional expressions (if-else in assertions)
+
+Generate approximately 5 formal specifications as Python assert statements.
+
+Format each specification like this:
+```python
+# Specification 1: [Description]
+assert [condition involving s and res]
+```
+
+================================================================================
+PROMPT FOR PROBLEM 2: Count Divisible Subarrays
+================================================================================
+
+Problem description:
+Given an array of integers and a number K, count the number of subarrays
+whose sum is divisible by K.
+
+A subarray is a contiguous part of an array.
+
+Use modular arithmetic properties:
+If (prefix_sum[j] - prefix_sum[i]) % K == 0, then prefix_sum[j] % K == prefix_sum[i] % K
+
+Example:
+arr = [4, 5, 0, -2, -3, 1], k = 5
+Subarrays with sum divisible by 5:
+[5], [5, 0], [5, 0, -2, -3], [0], [-2, -3], [4, 5, 0, -2, -3, 1]
+Answer: 7
+
+Method signature:
+def count_divisible_subarrays(arr: List[int], k: int) -> int
+
+Please write formal specifications as Python assertions that describe the correct 
+behavior of this method. Let 'res' denote the expected return value of 
+'count_divisible_subarrays(arr, k)'. 
+
+IMPORTANT CONSTRAINTS:
+- Do NOT call 'count_divisible_subarrays()' in your assertions
+- Do NOT use methods with side effects such as:
+  - print, input, file I/O operations
+  - random number generation (random.random(), etc.)
+  - timing functions (datetime.now(), time.time(), etc.)
+  - data structure modifications (list.append(), dict.update(), etc.)
+- Express the relationship between 'arr', 'k', and 'res' using ONLY:
+  - Pure list operations (len(), indexing, slicing)
+  - Arithmetic operations (+, -, *, //, %, **)
+  - Boolean logic (and, or, not, ==, !=, <, >, <=, >=)
+  - Conditional expressions (if-else in assertions)
+
+Generate approximately 5 formal specifications as Python assert statements.
+
+Format each specification like this:
+```python
+# Specification 1: [Description]
+assert [condition involving arr, k, and res]
+```
+
+================================================================================
+END OF PROMPTS
+================================================================================
+
+Next Steps:
+1. Paste each prompt into your LLM
+2. Save the responses
+3. Fill in the template: EXERCISE3_PART1_COMPLETED_TEMPLATE.md
+4. Evaluate each assertion as Correct or Incorrect
+5. Calculate accuracy rate
+6. Correct any incorrect assertions
